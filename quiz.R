@@ -2,12 +2,13 @@
 # The en_US.blogs.txt  file is how many megabytes?
 
 blog_file <- file.info("./data/final/en_US/en_US.blogs.txt")
-blog_file$size / 1024^2
+blog_file$size / 1024^2 #Converting to MB's
 
 # 2.
 # The en_US.twitter.txt has how many lines of text?
 
 lines_twitter <- length(readLines("././data/final/en_US/en_US.twitter.txt"))
+print(lines_twitter)
 
 # 3.
 # What is the length of the longest line seen in any of the three en_US data sets?
