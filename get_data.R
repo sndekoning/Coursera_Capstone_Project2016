@@ -12,4 +12,4 @@ if(!file.exists("./data/Coursera_Swiftkey.zip")){
    unzip("./data/Coursera_Swiftkey.zip", exdir = "./data")
 } else{
     print("Data present")
-    }
+}
