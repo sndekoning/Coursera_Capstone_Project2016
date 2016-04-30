@@ -1,0 +1,31 @@
+---
+title: "Coursera Capstone Project Milestone Report"
+author: "SN de Koning"
+date: "30 april 2016"
+output: html_document
+---
+
+### Introduction
+
+This report will document the steps of the Coursera Data Specialization Capstone-project taken up until this point. The goal of this project is to build an English-language text prediction model based on three different english text-files and create a Shiny app which uses this model to give text suggestions in response to user input. 
+
+### Data Description
+
+To build this model, three different files, hereafter corpora, were used. One corpus with news messages, one with text from weblogs, and one with text from twitter messages. 
+
+### Dependencies
+
+```{r, message=FALSE, warning=FALSE}
+library(tm)
+library(ggplot2)
+library(magrittr)
+library(stringr)
+```
+
+### Data Transformations
+
+### Explorations
+
+### N-Grams
+
+### Further Steps
