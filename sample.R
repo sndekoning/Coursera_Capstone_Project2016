@@ -3,48 +3,49 @@ source("get_data.R")
 # Creating smaller workable samples from the 3 data-sets.
 setwd("./data/final/en_US")
 
+
+# Sampling 5% of the lines of the twitter file.
 file_name <- "en_US.twitter.txt"
 con <- file(file_name, open = "r")
-twitter_lines <- readLines(con)
+twitter_lines <- readLines(con, encoding = "UTF-8")
 close(con)
 
 set.seed(290420161)
 
-sample_rank <- rbinom(2360148, 1, .05)
-twitter_df <- data.frame(sample_rank, twitter_lines)
-twitter_df <- twitter_df[sample_rank == 1, ,]
-twitter_lines_sample <- twitter_df$twitter_lines
+twitter_lines_sample <- sample(twitter_lines, size = length(twitter_lines)*.05)
+
+save(twitter_lines_sample, file = "twitter_lines_sample.RData")
+rm(list = ls())
+gc(verbose = FALSE)
 
 # Sampling 5% of the lines in the news file.
 file_name <- "en_US.news.txt"
 con <- file(file_name, open = "r")
-news_lines <- readLines(con)
+news_lines <- readLines(con, encoding = "UTF-8")
 close(con)
 
 set.seed(290420162)
 
-sample_rank <- rbinom(77259, 1, .05)
-news_df <- data.frame(sample_rank, news_lines)
-news_df <- news_df[sample_rank == 1, ,]
-news_lines_sample <- news_df$news_lines
+news_lines_sample <- sample(news_lines, size = length(news_lines)*.05)
+
+save(news_lines_sample, file = "news_lines_sample.RData")
+rm(list = ls())
+gc(verbose = FALSE)
 
 # Sampling 5% of the lines in the blog file.
 file_name <- "en_US.blogs.txt"
 con <- file(file_name, open = "r")
-blog_lines <- readLines(con)
+blog_lines <- readLines(con, encoding = "UTF-8")
 close(con)
 
 set.seed(290420163)
 
-sample_rank <-rbinom(899288, 1, 0.05)
-blog_df <- data.frame(sample_rank, blog_lines)
-blog_df <- blog_df[sample_rank == 1, ,]
-blog_lines_sample <- blog_df$blog_lines
+blog_lines_sample <- sample(blog_lines, size = length(blog_lines)*.05)
 
-# Saving the samples for easy later access.
 save(blog_lines_sample, file = "blog_lines_sample.RData")
-save(news_lines_sample, file = "news_lines_sample.RData")
-save(twitter_lines_sample, file = "twitter_lines_sample.RData")
-
-# Cleaning workspace.
 rm(list = ls())
+gc(verbose = FALSE)
+
+setwd("..")
+setwd("..")
+setwd("..")
