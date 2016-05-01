@@ -18,11 +18,7 @@ library(RWeka)
 total_sample <- paste(blog_lines_sample, news_lines_sample, twitter_lines_sample)
 rm(blog_lines_sample, news_lines_sample, twitter_lines_sample)
 
-# total_sample <- iconv(total_sample, from = "UTF-8", to = "latin1", sub = "")
-
 doc_corpus <- Corpus(VectorSource(total_sample))
-
-# doc_corpus_sample <- Corpus(VectorSource(total_sample[1:50]))
 
 # Getting bad words.
 
@@ -41,6 +37,8 @@ doc_corpus_clean <- doc_corpus %>%
     tm_map(stripWhitespace) %>%
     tm_map(removeWords, bad_words) %>%
     tm_map(stripWhitespace)
+
+save(doc_corpus_clean, "./data/doc_corpus_clean.RData")
 
 doc_term_matrix <- DocumentTermMatrix(doc_corpus_clean)
 sparse_dtm <- removeSparseTerms(doc_term_matrix, sparse =  0.99)

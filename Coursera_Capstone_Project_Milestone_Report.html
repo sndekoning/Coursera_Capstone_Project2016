@@ -122,7 +122,19 @@ $(document).ready(function () {
 </div>
 <div id="data-description" class="section level3">
 <h3>Data Description</h3>
-<p>To build this model, three different files, hereafter corpora, were used. One corpus with news messages, one with text from weblogs, and one with text from twitter messages.</p>
+<p>To build this model, three different files from the <a href="www.corpora.heliohost.org">HC Corpora</a> were used. One textfile with news messages, one with text from weblogs, and one with text from twitter messages. For more info see the readme at the <a href="http://www.corpora.heliohost.org/aboutcorpus.html">source</a>.</p>
+<pre class="r"><code>if(!dir.exists(&quot;./data&quot;)){
+    dir.create(&quot;./data&quot;)
+}    
+
+if(!file.exists(&quot;./data/Coursera_Swiftkey.zip&quot;)){
+    
+   get_url &lt;- &quot;https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip&quot;
+   download.file(get_url, &quot;./data/Coursera_Swiftkey.zip&quot;)
+      unzip(&quot;./data/Coursera_Swiftkey.zip&quot;, exdir = &quot;./data&quot;)
+  
+}</code></pre>
+<p>The data was retrieved</p>
 </div>
 <div id="dependencies" class="section level3">
 <h3>Dependencies</h3>
