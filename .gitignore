@@ -4,6 +4,7 @@
 
 # Session Data files
 .RData
+Coursera_Capstone_Project_Milestone_Report_cache
 
 # Example code in package build process
 *-Ex.R
@@ -21,3 +22,4 @@ vignettes/*.pdf
 
 # Datafiles
 data
+ohboydata
