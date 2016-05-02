@@ -23,3 +23,5 @@ vignettes/*.pdf
 # Datafiles
 data
 ohboydata
+news_lines_sample.RData
+*.RData
