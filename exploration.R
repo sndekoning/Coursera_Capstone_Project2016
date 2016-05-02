@@ -12,7 +12,11 @@ if(!file.exists("./data/sparse_dtm.RData") |
 
 # Getting Word Frequencies.
 word_frequencies <- sort(colSums(as.matrix(sparse_dtm)), decreasing = TRUE)
-word_frequencies_df <- data.frame(word = names(word_frequencies), frequency = word_frequencies)
+word_frequencies_df <- data.frame(word = names(word_frequencies),
+                                  frequency = word_frequencies)
+
+word_frequencies_df$word <- factor(word_frequencies_df$word,
+                                   levels = word_frequencies_df$word)
 
 # Frequency plot.
 library(ggplot2)
@@ -28,16 +32,27 @@ ggplot(word_frequencies_df[1:50, ,], aes(x=word, y=frequency)) +
 library(RWeka)
 library(tm)
 
-tokenizer_function <- function(x) {NGramTokenizer(x, Weka_control(min = 2, max = 4))}
-tokenized_dtm <- DocumentTermMatrix(doc_corpus_clean, control = list(tokenize = tokenizer_function))
+tokenizer_function <- function(x) {
+    NGramTokenizer(x, Weka_control(min = 2, max = 4))
+}
+
+tokenized_dtm <- DocumentTermMatrix(doc_corpus_clean,
+                                    control = list(tokenize = tokenizer_function))
+
 sparse_ngram_dtm <- removeSparseTerms(tokenized_dtm, sparse = .99)
 
-twogram_frequencies <- sort(colSums(as.matrix(sparse_ngram_dtm)), decreasing = TRUE)
-twogram_frequencies_df <- data.frame(twogram = names(twogram_frequencies), frequency = twogram_frequencies)
+twogram_frequencies <- sort(colSums(as.matrix(sparse_ngram_dtm)),
+                            decreasing = TRUE)
 
+twogram_frequencies_df <- data.frame(twogram = names(twogram_frequencies),
+                                     frequency = twogram_frequencies)
+
+twogram_frequencies_df$twogram <- factor(twogram_frequencies_df$twogram,
+                                   levels = twogram_frequencies_df$twogram)
+# N-Gram Frequency Plot.
 ggplot(twogram_frequencies_df[1:50, ,], aes(x=twogram, y=frequency)) +
     geom_bar(stat="identity") +
     xlab("") +
     ylab("Frequency") +
-    ggtitle("Top 50 most frequently occurring 2gram word combinations over the three datasets") + 
+    ggtitle("Top 50 most frequently occurring 2-Gram word combinations over the three datasets") + 
     coord_flip()
