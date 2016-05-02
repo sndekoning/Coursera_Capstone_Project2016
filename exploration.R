@@ -1,5 +1,5 @@
 # Retrieving data.
-if(!file.exists("./data/sparse_dtm.RData") &
+if(!file.exists("./data/sparse_dtm.RData") |
    !file.exists("./data/doc_corpus_clean.RData")){
     print("data not present, running text_mining.R")
     source("text_mining.R")
@@ -7,6 +7,7 @@ if(!file.exists("./data/sparse_dtm.RData") &
     print("Data present, getting data...")
     load("./data/sparse_dtm.RData")
     load("./data/doc_term_matrix.RData")
+    load("./data/doc_corpus_clean.RData")
 }
 
 # Getting Word Frequencies.
@@ -29,3 +30,14 @@ library(tm)
 
 tokenizer_function <- function(x) {NGramTokenizer(x, Weka_control(min = 2, max = 4))}
 tokenized_dtm <- DocumentTermMatrix(doc_corpus_clean, control = list(tokenize = tokenizer_function))
+sparse_ngram_dtm <- removeSparseTerms(tokenized_dtm, sparse = .99)
+
+twogram_frequencies <- sort(colSums(as.matrix(sparse_ngram_dtm)), decreasing = TRUE)
+twogram_frequencies_df <- data.frame(twogram = names(twogram_frequencies), frequency = twogram_frequencies)
+
+ggplot(twogram_frequencies_df[1:50, ,], aes(x=twogram, y=frequency)) +
+    geom_bar(stat="identity") +
+    xlab("") +
+    ylab("Frequency") +
+    ggtitle("Top 50 most frequently occurring 2gram word combinations over the three datasets") + 
+    coord_flip()
