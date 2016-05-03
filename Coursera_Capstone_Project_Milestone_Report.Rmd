@@ -44,7 +44,7 @@ library(RWeka)
 
 Since the files are quite large, samples were made to build the model on.
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Reading and sampling the twitter file.
 if(!file.exists("./data/final/en_US/twitter_lines_sample.RData")){
     file_name <- "./data/final/en_US/en_US.twitter.txt"
@@ -61,7 +61,7 @@ if(!file.exists("./data/final/en_US/twitter_lines_sample.RData")){
 }
 
 ```
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Reading and sampling the news file.
 if(!file.exists("./data/final/en_US/news_lines_sample.RData")){
     file_name <- "./data/final/en_US/en_US.news.txt"
@@ -77,7 +77,7 @@ if(!file.exists("./data/final/en_US/news_lines_sample.RData")){
     load(file = "./data/final/en_US/news_lines_sample.RData")
 }
 ```
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Reading and sampling the blog file.
 if(!file.exists("./data/final_en_US/blog_lines_sample.RData")){
     file_name <- "./data/final/en_US/en_US.blogs.txt"
@@ -193,3 +193,6 @@ ggplot(twogram_frequencies_df[1:50, ,], aes(x=twogram, y=frequency)) +
 
 
 ### Further Steps.
+
+One of the challenges to tackle after this, is how to handle "new" words, that is, words that haven't been found in the corpora. One way could be setting "default" words, highly frequent words as a follow-up to unknown words.
+Other considerations are incorperating 3 and 4 grams in the model for better text prediction.
