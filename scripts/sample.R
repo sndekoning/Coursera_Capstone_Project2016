@@ -1,6 +1,6 @@
 # === Creating smaller workable samples from the 3 data-sets. ===
 
-source("get_data.R")
+source("./scripts/get_data.R")
 
 
 # Sampling 5% of the lines of the twitter file.

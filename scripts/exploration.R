@@ -11,7 +11,7 @@ if(!file.exists("./data/sparse_dtm.RData") |
    !file.exists("./data/doc_corpus_clean.RData") |
    !file.exists("./data/sparse_bigram_dtm.RData")){
     print("data not present, running text_mining.R")
-    source("text_mining.R")
+    source("./scripts/text_mining.R")
 } else{
     print("Data present, getting data...")
     load("./data/sparse_dtm.RData")

@@ -10,7 +10,7 @@ library(RWeka)
 # Retrieving the sampled data.
 if(!file.exists("./data/total_lines_sample.RData")){
     print("Sample data not present, sampling data...")
-    source("sample.R")
+    source("./scripts/sample.R")
 } else{
     print("Sample data present, getting data...")
     load("./data/total_lines_sample.RData")
@@ -43,6 +43,8 @@ save(doc_corpus_clean, file = "./data/doc_corpus_clean.RData")
 
 
 # Creating document term matrix for word frequencies. 
+print("Creating Document Term Matrix")
+
 doc_term_matrix <- DocumentTermMatrix(doc_corpus_clean)
 
 sparse_dtm <- removeSparseTerms(doc_term_matrix,
@@ -53,6 +55,8 @@ save(sparse_dtm, file = "./data/sparse_dtm.Rdata")
 
 
 # Finding common bigrams.
+print("Creating DTM for bigrams")
+
 bigram_tokenizer <- function(x) {
     NGramTokenizer(x, Weka_control(min = 2, max = 2))
 }
@@ -67,6 +71,8 @@ save(sparse_bigram_dtm, file = "./data/sparse_bigram_dtm.RData")
 
 
 # Finding common trigrams.
+print("Creating DTM for trigrams")
+
 trigram_tokenizer <- function(x) {
     NGramTokenizer(x, Weka_control(min = 3, max = 3))
 }
@@ -81,6 +87,8 @@ save(sparse_trigram_dtm, file = "./data/sparse_trigram_dtm.RData")
 
 
 # Finding common quadgrams.
+print("Creating DTM for quadgrams")
+
 quadgram_tokenizer <- function(x) {
     NGramTokenizer(x, Weka_control(min = 4, max = 4))
 }
