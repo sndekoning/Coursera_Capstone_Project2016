@@ -1,6 +1,15 @@
+# === Exploratory Plots ===
+
+# Loading Dependencies.
+library(ggplot2)
+library(RWeka)
+library(tm)
+
+
 # Retrieving data.
 if(!file.exists("./data/sparse_dtm.RData") |
-   !file.exists("./data/doc_corpus_clean.RData")){
+   !file.exists("./data/doc_corpus_clean.RData") |
+   !file.exists("./data/sparse_bigram_dtm.RData")){
     print("data not present, running text_mining.R")
     source("text_mining.R")
 } else{
@@ -8,7 +17,9 @@ if(!file.exists("./data/sparse_dtm.RData") |
     load("./data/sparse_dtm.RData")
     load("./data/doc_term_matrix.RData")
     load("./data/doc_corpus_clean.RData")
+    load("./data/sparse_bigram_dtm.RData")
 }
+
 
 # Getting Word Frequencies.
 word_frequencies <- sort(colSums(as.matrix(sparse_dtm)), decreasing = TRUE)
@@ -16,11 +27,10 @@ word_frequencies_df <- data.frame(word = names(word_frequencies),
                                   frequency = word_frequencies)
 
 word_frequencies_df$word <- factor(word_frequencies_df$word,
-                                   levels = word_frequencies_df$word)
+                                   levels = word_frequencies_df$word) #Preventing ggplot autosort.
+
 
 # Frequency plot.
-library(ggplot2)
-
 ggplot(word_frequencies_df[1:50, ,], aes(x=word, y=frequency)) +
     geom_bar(stat="identity") +
     xlab("") +
@@ -28,19 +38,8 @@ ggplot(word_frequencies_df[1:50, ,], aes(x=word, y=frequency)) +
     ggtitle("Top 50 most frequently occurring words over the three datasets") + 
     coord_flip()
 
-# N-Gram Frequencies.
-library(RWeka)
-library(tm)
 
-tokenizer_function <- function(x) {
-    NGramTokenizer(x, Weka_control(min = 2, max = 4))
-}
-
-tokenized_dtm <- DocumentTermMatrix(doc_corpus_clean,
-                                    control = list(tokenize = tokenizer_function))
-
-sparse_ngram_dtm <- removeSparseTerms(tokenized_dtm, sparse = .99)
-
+# Bigram Frequencies.
 twogram_frequencies <- sort(colSums(as.matrix(sparse_ngram_dtm)),
                             decreasing = TRUE)
 
@@ -48,8 +47,10 @@ twogram_frequencies_df <- data.frame(twogram = names(twogram_frequencies),
                                      frequency = twogram_frequencies)
 
 twogram_frequencies_df$twogram <- factor(twogram_frequencies_df$twogram,
-                                   levels = twogram_frequencies_df$twogram)
-# N-Gram Frequency Plot.
+                                   levels = twogram_frequencies_df$twogram) #Preventing ggplot autosort.
+
+
+# Bigram Frequency Plot.
 ggplot(twogram_frequencies_df[1:50, ,], aes(x=twogram, y=frequency)) +
     geom_bar(stat="identity") +
     xlab("") +

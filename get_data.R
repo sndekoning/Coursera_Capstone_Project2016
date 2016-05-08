@@ -1,7 +1,10 @@
+# === Getting the Data ===
+
 # Checking for and if needed creating the data folder
 if(!dir.exists("./data")){
     dir.create("./data")
 }    
+
 
 # Checking for and if needed downloading the data,unzipping 548 MB
 if(!file.exists("./data/Coursera_Swiftkey.zip")){
